@@ -1,0 +1,26 @@
+{
+  "name": "wonkavator",
+  "version": "1.0.0",
+  "description": "For controlling elevators over the network",
+  "main": "lib/flipflop.js",
+  "dependencies": {
+    "johnny-five": "^1.0.0",
+    "pigpio": "^1.2.1",
+    "raspi-io": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/johnny-five": "0.0.40",
+    "@types/node": "^10.12.18",
+    "nodemon": "^1.18.9",
+    "ts-node": "^7.0.1",    
+    "typescript": "^3.2.2"
+  },
+  "scripts": {
+    "start": "npm run build:live",
+    "build": "tsc -p .",
+    "build:live": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/flipflop.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ben Shapiro",
+  "license": "GPL"
+}
