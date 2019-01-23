@@ -22,6 +22,8 @@ function relayToggle(){
     relayPinState ? relayOff() : relayOn();
 }
 
+console.log("Board type: " + board.type);
+console.log("Pin count: " + board.pins.length);
 
 board.on("ready", function() {
     relayOff();

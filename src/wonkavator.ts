@@ -44,7 +44,7 @@ console.log("Board type: " + board.type)
 console.log("Pin count: " + board.pins.length)
 
 
-let relays = { "up": new J5Relay("GPIO26"), "down": new J5Relay("GPIO29") };
+let relays = { up: new J5Relay("GPIO26"), down: new J5Relay("GPIO29") };
 
 
 function toggleRelays(){
