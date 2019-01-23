@@ -77,7 +77,7 @@ osc.on('/up', (message: any) => {
 })
 
 
-osc.on('/down', (message: any) => {
+osc.on('/down', (message: any) => { // fixme: should create @typings for osc-js
     relays.down.pressAndRelease();
 })
 
