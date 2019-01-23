@@ -2,9 +2,9 @@ import { AnyARecord } from "dns";
 import { types } from "util";
 import { Relay, Board } from "johnny-five";
 
-let five = require("johnny-five");
-let Raspi = require("raspi-io");
-let OSC = require("osc-js");
+const five = require("johnny-five");
+const Raspi = require("raspi-io");
+const OSC = require("osc-js");
 
 
 ///////////////
@@ -47,38 +47,31 @@ class J5Relay{
 
     pressAndRelease(){
         this.on();
-        setTimeout(this.off, 250)
+        setTimeout( () => { this.off() }, 250)
     }
 }
-
-console.log("Board id: " + board.id)
-console.log("Pin count: " + board.pins.length)
-
-let relays = { up: new J5Relay("GPIO26"), down: new J5Relay("GPIO29") };
-
-function toggleRelays(){
-    relays.up.toggle();
-    relays.down.toggle();
-}
-
-board.on("ready", function() {
-    setInterval(toggleRelays, 1000);
-});
-
 
 //////////
 // Putting our buttons on the network
 //////////
 
-const osc = new OSC()
+const osc = new OSC({ plugin: new OSC.DatagramPlugin() })
 
-osc.on('/up', (message: any) => {
-    relays.up.pressAndRelease();
-})
+board.on("ready", function() {
+    console.log("Board id: " + board.id)
+    console.log("Pin count: " + board.pins.length)
 
+    let relays = { up: new J5Relay(25),  down: new J5Relay(29) };
 
-osc.on('/down', (message: any) => { // fixme: should create @typings for osc-js
-    relays.down.pressAndRelease();
-})
+    osc.on('/up', (message: any) => {
+        console.log("received up command!: " + message.args)
+        relays.up.pressAndRelease();
+    })
+    
+    osc.on('/down', (message: any) => { // fixme: should create @typings for osc-js
+        console.log("received down command!: " + message.args)
+        relays.down.pressAndRelease();
+    })
 
-osc.open({ port: 9009})
+    osc.open({ host: "0.0.0.0", port: 9009})
+});
