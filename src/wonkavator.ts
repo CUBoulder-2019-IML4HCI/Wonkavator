@@ -30,13 +30,13 @@ class J5Relay{
 
     // Turn on the relay
     on(){
-        this.pin.close();
+        this.pin.open(); // my board closes the circuit by default
         this.state = true;        
     }
 
     // Turn off the relay
     off(){
-        this.pin.open();
+        this.pin.close(); // my board closes the circuit by default
         this.state = false;
     }
 
