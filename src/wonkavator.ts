@@ -1,13 +1,15 @@
 import { AnyARecord } from "dns";
 import { types } from "util";
-import { Relay } from "johnny-five";
+import { Relay, Board } from "johnny-five";
 
 let five = require("johnny-five");
 let Raspi = require("raspi-io");
+
+
 let osc = require("osc-js");
 
 
-let board = new five.Board({
+let board:Board = new five.Board({
     io: new Raspi()
   });
 
@@ -40,7 +42,7 @@ class J5Relay{
 
 }
 
-console.log("Board type: " + board.type)
+console.log("Board id: " + board.id)
 console.log("Pin count: " + board.pins.length)
 
 
@@ -49,7 +51,7 @@ let relays = { up: new J5Relay("GPIO26"), down: new J5Relay("GPIO29") };
 
 function toggleRelays(){
     relays.up.toggle();
-    //relays.down.toggle();
+    relays.down.toggle();
 }
 
 board.on("ready", function() {
